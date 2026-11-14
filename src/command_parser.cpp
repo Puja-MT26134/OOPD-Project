@@ -239,11 +239,16 @@ std::unique_ptr<Command> buildGrade(const Tokens& tokens) {
        requireCount(tokens, 4);
        return std::make_unique<ConvertCommand>(tokens[1], tokens[2], tokens[3]);
    }
-   
+
 std::unique_ptr<Command> buildEligible(const Tokens& tokens) {
     requireCount(tokens, 4);
     return std::make_unique<EligibleCommand>(tokens[1], tokens[2],
                                              Term::parse(tokens[3]));
+}
+
+std::unique_ptr<Command> buildGrad(const Tokens& tokens) {
+    requireCount(tokens, 2);
+    return std::make_unique<GradCommand>(tokens[1]);
 }
 
 std::unique_ptr<Command> buildGpa(const Tokens& tokens) {
@@ -269,6 +274,7 @@ std::unique_ptr<Command> CommandParser::parse(const std::string& line) const {
         {"PROGRAM", buildProgram},   {"COURSE", buildCourse},
         {"STUDENT", buildStudent},   {"REGISTER", buildRegister},
         {"GRADE", buildGrade},       {"CONVERT", buildConvert},
+               {"ELIGIBLE", buildEligible}, {"GRAD", buildGrad},
         {"GPA", buildGpa},           {"AVG", buildAvg},
     };
     const auto it = kBuilders.find(tokens[0]);

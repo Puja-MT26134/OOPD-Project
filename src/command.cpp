@@ -48,6 +48,12 @@ std::optional<std::string> GradeCommand::execute(Registrar& registrar) const {
     return std::nullopt;
 }
 
+GradCommand::GradCommand(std::string roll) : roll_(std::move(roll)) {}
+
+std::optional<std::string> GradCommand::execute(Registrar& registrar) const {
+    return "GRAD " + roll_ + " " + registrar.graduationVerdict(roll_);
+}
+
 EligibleCommand::EligibleCommand(std::string roll, std::string courseCode, Term term)
     : roll_(std::move(roll)), courseCode_(std::move(courseCode)), term_(term) {}
 

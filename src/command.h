@@ -70,6 +70,15 @@ private:
     std::string symbol_;
 };
 
+class GradCommand : public Command {
+public:
+    explicit GradCommand(std::string roll);
+    std::optional<std::string> execute(Registrar& registrar) const override;
+
+private:
+    std::string roll_;
+};
+
 class EligibleCommand : public Command {
 public:
     EligibleCommand(std::string roll, std::string courseCode, Term term);

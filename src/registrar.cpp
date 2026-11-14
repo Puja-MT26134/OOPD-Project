@@ -2,9 +2,12 @@
 
 #include <utility>
 
+#include "student_summary.h"
 #include "exceptions.h"
 #include "gpa.h"
 #include "eligibility.h"
+#include "graduation.h"
+#include "student_summary.h"
 
 void Registrar::setProgram(const ProgramRules& rules) {
     if (!courses_.empty()) {
@@ -106,6 +109,19 @@ const Course& Registrar::requireCourse(const std::string& code) const {
       }
       student.addAttempt(std::move(attempt));  // mutate last
   }
+
+  std::string Registrar::graduationVerdict(const std::string& roll) const {
+    const std::vector<std::string> failed =
+        GraduationAuditor(rules_, courses_).failedRules(requireStudent(roll));
+    if (failed.empty()) {
+        return "YES";
+    }
+    std::string verdict = "NO ";
+    for (std::size_t i = 0; i < failed.size(); ++i) {
+        verdict += (i == 0 ? "" : ",") + failed[i];
+    }
+    return verdict;
+}
 
   std::string Registrar::eligibilityVerdict(const std::string& roll,
                                             const std::string& courseCode,

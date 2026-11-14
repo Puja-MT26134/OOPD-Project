@@ -24,6 +24,9 @@ public:
                         const Term& term);
     void recordGrade(const std::string& roll, const std::string& courseCode,
                      const Term& term, const std::string& symbol);
+                         // "YES" or "NO R1,R5" (the failing rules, in order).
+    std::string graduationVerdict(const std::string& roll) const;
+    
                            // "YES" or "NO E4"; throws for an unknown student or course.
       std::string eligibilityVerdict(const std::string& roll,
                                      const std::string& courseCode,

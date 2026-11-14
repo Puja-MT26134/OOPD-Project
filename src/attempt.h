@@ -38,7 +38,7 @@ public:
           // True when this registration was made for grade improvement.
       bool isImprovement() const noexcept { return improvement_; }
       void markImprovement() noexcept { improvement_ = true; }
-      
+
     bool isPending() const noexcept { return history_.empty(); }
     bool holdsIncomplete() const noexcept {
         return !history_.empty() && history_.back().isIncomplete();
@@ -51,6 +51,7 @@ private:
     std::string courseCode_;
     Term term_;
     std::vector<Grade> history_;
+    bool improvement_ = false;
 };
 
 #endif  // ACADERP_ATTEMPT_H
