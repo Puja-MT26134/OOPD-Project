@@ -70,6 +70,15 @@ private:
     std::string symbol_;
 };
 
+class TranscriptCommand : public Command {
+public:
+    explicit TranscriptCommand(std::string roll);
+    std::optional<std::string> execute(Registrar& registrar) const override;
+
+private:
+    std::string roll_;
+};
+
 class GradCommand : public Command {
 public:
     explicit GradCommand(std::string roll);

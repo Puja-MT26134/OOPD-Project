@@ -48,6 +48,13 @@ std::optional<std::string> GradeCommand::execute(Registrar& registrar) const {
     return std::nullopt;
 }
 
+TranscriptCommand::TranscriptCommand(std::string roll) : roll_(std::move(roll)) {}
+
+std::optional<std::string> TranscriptCommand::execute(Registrar& registrar) const {
+    return "TRANSCRIPT " + roll_ + " " + registrar.transcriptLine(roll_);
+}
+
+
 GradCommand::GradCommand(std::string roll) : roll_(std::move(roll)) {}
 
 std::optional<std::string> GradCommand::execute(Registrar& registrar) const {

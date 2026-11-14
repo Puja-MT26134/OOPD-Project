@@ -110,6 +110,30 @@ const Course& Registrar::requireCourse(const std::string& code) const {
       student.addAttempt(std::move(attempt));  // mutate last
   }
 
+  std::string Registrar::transcriptLine(const std::string& roll) const {
+    const Student& student = requireStudent(roll);
+    std::string line = student.name();
+    for (const auto& entry : student.attempts()) {
+        for (const auto& attempt : entry.second) {
+            line += " " + attempt->courseCode() + "@" + attempt->term().toString() + "=";
+            const std::vector<Grade>& history = attempt->history();
+            if (history.empty()) {
+                line += "-";
+            }
+            for (std::size_t i = 0; i < history.size(); ++i) {
+                line += (i == 0 ? "" : ">") + history[i].symbol();
+            }
+        }
+    }
+    const StudentSummary summary(student, courses_);
+    const GpaAccumulator gpa = summary.gpa();
+    line += " EARNED=" + std::to_string(summary.earnedCredits());
+    line += " GPA=" + (gpa.empty() ? std::string("NA")
+                                    : GpaAccumulator::format(gpa.hundredths()));
+    return line;
+}
+
+
   std::string Registrar::graduationVerdict(const std::string& roll) const {
     const std::vector<std::string> failed =
         GraduationAuditor(rules_, courses_).failedRules(requireStudent(roll));

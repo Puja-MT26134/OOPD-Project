@@ -17,6 +17,11 @@ build:
 clean:
 	rm -rf build acaderp
 
-.PHONY: all clean
+.PHONY: all clean materialtest
 
 -include $(OBJ:.o=.d)
+materialtest: build/material_test
+	./build/material_test
+
+build/material_test: tests/material_test.cpp build/course_material.o | build
+	$(CXX) $(CXXFLAGS) -Isrc -o $@ $^
