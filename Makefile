@@ -23,5 +23,5 @@ clean:
 materialtest: build/material_test
 	./build/material_test
 
-build/material_test: tests/material_test.cpp build/course_material.o | build
+build/material_test: tests/grp79_material_test.cpp build/grp79_course_material.o | build
 	$(CXX) $(CXXFLAGS) -Isrc -o $@ $^

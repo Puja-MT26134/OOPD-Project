@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Group ID: 79
 """Prints a large valid script: N students (default 3000), each taking 40 courses."""
 import random
 import sys
